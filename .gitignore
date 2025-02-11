@@ -1,0 +1,13 @@
+#
+.env
+manage.py
+poetry.lock
+
+#
+__init__.py
+__pycache__/
+asgi.py
+wsgi.py
+tests.py
+apps.py
+migrations/
