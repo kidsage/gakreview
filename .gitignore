@@ -3,6 +3,7 @@
 manage.py
 poetry.lock
 .vscode/
+staticfiles/
 
 #
 __init__.py

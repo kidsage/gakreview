@@ -1,10 +1,12 @@
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from api.restaurant.views import RestaurantViewSet
+
+from api.restaurant.views import NaverMapSearchView, RestaurantViewSet
 
 router = DefaultRouter()
-router.register(r'restaurants', RestaurantViewSet)
+router.register(r"restaurants", RestaurantViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path("", include(router.urls)),
+    path("search/", NaverMapSearchView.as_view(), name="naver_map_search"),
 ]
