@@ -2,6 +2,7 @@
 .env
 manage.py
 poetry.lock
+.vscode/
 
 #
 __init__.py
