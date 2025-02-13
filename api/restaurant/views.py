@@ -1,5 +1,6 @@
 import requests
 from django.conf import settings
+from django.http import JsonResponse
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -26,9 +27,9 @@ class NaverMapSearchView(APIView):
         response = requests.get(url, headers=headers, params=params)
 
         if response.status_code == 200:
-            return Response(response.json())
+            return JsonResponse(response.json())
         else:
-            return Response(
-                {"error": "Failed to fetch data from Naver API"},
-                status=status.HTTP_400_BAD_REQUEST,
+            print(response.status_code, response.text)
+            return JsonResponse(
+                {"error": "Failed to fetch data from Naver API"}, status=400
             )

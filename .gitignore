@@ -13,3 +13,9 @@ wsgi.py
 tests.py
 apps.py
 migrations/
+
+#
+node_modules/
+.babelrc
+.env.local
+package-lock.json
