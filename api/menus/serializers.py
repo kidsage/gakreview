@@ -1,10 +1,12 @@
 from rest_framework import serializers
-from api.menu.models import Menu
-from api.review.serializers import ReviewSerializer
+
+from ..reviews.serializers import ReviewSerializer
+from .models import Menu
+
 
 class MenuSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
 
     class Meta:
         model = Menu
-        fields = '__all__'
+        fields = ["id", "name", "price", "reviews"]

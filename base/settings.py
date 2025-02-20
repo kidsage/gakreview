@@ -49,9 +49,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     # USER APPS
-    "api.restaurant",
-    "api.menu",
-    "api.review",
+    "api.restaurants",
+    "api.menus",
+    "api.reviews",
 ]
 
 MIDDLEWARE = [
