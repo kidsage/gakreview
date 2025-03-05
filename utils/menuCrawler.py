@@ -25,7 +25,7 @@ driver = webdriver.Chrome(service=service, options=options)
 driver.get("https://map.naver.com")
 
 searchFrame = "searchIframe"
-resultListTitleClass = "gbGlu"
+entryFrame = "entryIframe"
 
 try:
     search_box = WebDriverWait(driver, 5).until(
@@ -44,9 +44,6 @@ try:
         EC.presence_of_element_located((By.ID, searchFrame))
     )
     driver.switch_to.frame(searchFrame)
-    # WebDriverWait(driver, 1).until(
-    #     EC.presence_of_element_located((By.CLASS_NAME, resultListTitleClass))
-    # )
 
     first_result = WebDriverWait(driver, 5).until(
         EC.presence_of_element_located(
@@ -57,9 +54,48 @@ try:
         )
     )
     # print(first_result)
+    time.sleep(1)
     first_result.click()
-    time.sleep(3)
+
+    time.sleep(1)
     driver.switch_to.default_content()
+
+    driver.switch_to.frame(entryFrame)
+    menu = WebDriverWait(driver, 5).until(
+        EC.presence_of_element_located(
+            (
+                By.CSS_SELECTOR,
+                "#app-root > div > div > div > div.place_fixed_maintab > div > div > div > div > a:nth-child(3) > span",
+            )
+        )
+    )
+    menu.click()
+    time.sleep(1)
+
+    # 메뉴 항목 추출
+    menu_items = menu.find_elements(
+        By.CSS_SELECTOR,
+        "#app-root > div > div > div > div:nth-child(6) > div:nth-child(2) > div.place_section.no_margin > div.place_section_content > ul",
+    )
+    print(menu_items)
+    menu_list = []
+
+    for item in menu_items:
+        try:
+            # 메뉴 이름 추출
+            menu_name = item.find_element(By.CSS_SELECTOR, "span.lPzHi").text
+            # 메뉴 가격 추출
+            menu_price = item.find_element(By.CSS_SELECTOR, "div.GXS1X em").text
+            menu_list.append((menu_name, menu_price))
+        except Exception as e:
+            print(f"메뉴 정보 추출 중 오류 발생: {e}")
+
+    # 메뉴 정보 출력
+    for menu in menu_list:
+        print(f"메뉴: {menu[0]}, 가격: {menu[1]}")
+
+    driver.switch_to.default_content()
+    time.sleep(3)
 
     print("done")
 except Exception as e:
