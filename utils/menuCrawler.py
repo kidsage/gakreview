@@ -25,13 +25,13 @@ driver = webdriver.Chrome(service=service, options=options)
 driver.get("https://map.naver.com")
 
 searchFrame = "searchIframe"
-resultListTitleClass = "P7gyV"
+resultListTitleClass = "gbGlu"
 
 try:
     search_box = WebDriverWait(driver, 5).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "input.input_search"))
     )
-    search_box.send_keys("워낭소리")
+    search_box.send_keys("주나수산")
     search_box.send_keys(Keys.ENTER)
 
 except Exception as e:
@@ -47,9 +47,24 @@ try:
     # WebDriverWait(driver, 1).until(
     #     EC.presence_of_element_located((By.CLASS_NAME, resultListTitleClass))
     # )
+
+    first_result = WebDriverWait(driver, 5).until(
+        EC.presence_of_element_located(
+            (
+                By.CSS_SELECTOR,
+                "#_pcmap_list_scroll_container > ul > li:nth-child(1) > div.qbGlu > div.ouxiq > a > div",
+            )
+        )
+    )
+    # print(first_result)
+    first_result.click()
+    time.sleep(3)
     driver.switch_to.default_content()
+
+    print("done")
 except Exception as e:
     print(e, "failed")
+    # pass
 
 # 드라이버 종료
 driver.quit()
